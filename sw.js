@@ -1,5 +1,5 @@
 // Lets the app open even without internet. (Your data is synced by Firebase separately.)
-const CACHE = 'expenses-v1';
+const CACHE = 'expenses-v2';
 const SHELL = ['./', './index.html', './firebase-config.js', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

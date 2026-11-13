@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f766e">
+<meta name="theme-color" content="#f5f6fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Expenses">
@@ -15,15 +16,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f4f6f5; --card:#ffffff; --ink:#14201d; --muted:#6b7a76; --line:#e3e8e6;
-  --brand:#0f766e; --brand2:#14b8a6; --brandSoft:#e6f4f2;
+  --bg:#f5f6fa; --card:#ffffff; --ink:#101828; --muted:#667085; --line:#e8ebf2;
+  --brand:#ff7a1a; --brand2:#ff9a4d; --brandSoft:#fff1e6;
+  --navy:#13204a; --navyLine:#13204a; --navyText:#aab6dd; --onNavy:#ffffff;
   --red:#dc2626; --redSoft:#fdecec; --amber:#d97706; --amberSoft:#fdf3e2; --green:#16a34a;
   --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);
   --r:18px;
 }
 @media (prefers-color-scheme:dark){
-  :root{--bg:#0d1312;--card:#161e1c;--ink:#e8efed;--muted:#8fa09b;--line:#25302d;
-  --brandSoft:#123430;--redSoft:#3a1717;--amberSoft:#3a2a12;--shadow:none}
+  :root{--bg:#0b1020;--card:#141a2e;--ink:#e8ecf7;--muted:#8590ad;--line:#1f2740;
+  --brand:#ff7a1a;--brand2:#ff8a3d;--brandSoft:#3a2414;--red:#ff7b72;--green:#4ade80;
+  --navy:#1b2a5e;--navyLine:#2b3c7a;--navyText:#aab6dd;
+  --redSoft:#3a1717;--amberSoft:#3a2a12;--shadow:none}
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
@@ -36,13 +40,27 @@ header.top .sub{font-size:13px;color:var(--muted);margin-top:2px}
 .sync{font-size:11px;padding:5px 9px;border-radius:99px;background:var(--brandSoft);color:var(--brand);font-weight:600;white-space:nowrap}
 .sync.local{background:var(--amberSoft);color:var(--amber)}
 .card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);border:1px solid var(--line);margin-bottom:12px}
-.hero{background:linear-gradient(135deg,var(--brand),#115e59);color:#fff;border:none}
-.hero .lbl{font-size:13px;opacity:.85}
-.hero .big{font-size:34px;font-weight:800;letter-spacing:-.02em;margin:4px 0 12px}
-.bar{height:9px;background:rgba(255,255,255,.22);border-radius:99px;overflow:hidden}
-.bar>i{display:block;height:100%;background:#fff;border-radius:99px;transition:width .4s}
-.bar.warn>i{background:#fcd34d}.bar.over>i{background:#fca5a5}
-.hero .meta{display:flex;justify-content:space-between;font-size:12.5px;margin-top:8px;opacity:.92}
+.hero{background:var(--navy);color:#fff;border:1px solid var(--navyLine);position:relative;overflow:hidden;padding:20px 20px 18px;border-radius:22px;box-shadow:0 10px 30px rgba(19,32,74,.25)}
+.hero::before{content:'';position:absolute;right:-70px;top:-70px;width:210px;height:210px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero::after{content:'';position:absolute;right:40px;bottom:-110px;width:200px;height:200px;border-radius:50%;background:rgba(255,122,26,.13)}
+.hero>*{position:relative;z-index:1}
+.heroTop{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--navyText)}
+.emv{width:36px;height:27px;border-radius:7px;background:linear-gradient(135deg,#f7d58b,#d9a03b);position:relative;overflow:hidden}
+.emv::before{content:'';position:absolute;inset:8px 0;border-top:1px solid rgba(0,0,0,.18);border-bottom:1px solid rgba(0,0,0,.18)}
+.emv::after{content:'';position:absolute;inset:0 13px;border-left:1px solid rgba(0,0,0,.18);border-right:1px solid rgba(0,0,0,.18)}
+.hero .big{font-size:36px;font-weight:800;letter-spacing:-.02em;margin:14px 0 2px}
+.hero .heroSub{font-size:12.5px;color:var(--navyText);margin-bottom:14px}
+.bar{height:7px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .4s}
+.bar.warn>i{background:#fbbf24}.bar.over>i{background:#ff5c5c}
+.hero .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:12px}
+.cardName{letter-spacing:.14em;color:var(--navyText);font-weight:600;text-transform:uppercase}
+.cardPct{color:#ffa45c;font-weight:700}
+.stat .v.good{color:var(--green)}.stat .v.bad{color:var(--red)}
+.item .amt{color:var(--red)}
+.credit{text-align:center;font-size:12.5px;color:var(--muted);padding:16px 0 6px}
+.credit .h{color:#ff4d4f}
+.credit b{color:var(--ink);font-weight:700}
 .alert{border-radius:14px;padding:11px 13px;font-size:13.5px;font-weight:600;margin-bottom:12px;display:none}
 .alert.show{display:block}
 .alert.warn{background:var(--amberSoft);color:var(--amber)}
@@ -66,7 +84,8 @@ nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-to
 nav.tabs button{background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11.5px;color:var(--muted);padding:4px 10px;cursor:pointer;font-weight:600;min-width:62px}
 nav.tabs button svg{width:22px;height:22px}
 nav.tabs button.on{color:var(--brand)}
-.fab{position:fixed;right:max(18px,calc(50% - 262px));bottom:calc(84px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:18px;border:none;background:var(--brand);color:#fff;font-size:30px;box-shadow:0 8px 24px rgba(15,118,110,.4);cursor:pointer;z-index:21;display:grid;place-items:center}
+nav.tabs button.addBtn{width:58px;height:58px;min-width:58px;border-radius:50%;background:var(--brand);color:#fff;margin-top:-30px;padding:0;display:grid;place-items:center;border:5px solid var(--bg);box-shadow:0 8px 20px rgba(255,122,26,.45)}
+nav.tabs button.addBtn svg{width:26px;height:26px}
 .view{display:none}.view.on{display:block}
 .monthnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .monthnav button{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px}
@@ -110,7 +129,7 @@ label.l{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin
 .setRow:last-child{border-bottom:none}
 .setRow .d{font-size:12.5px;color:var(--muted);margin-top:2px}
 .small{font-size:13px;color:var(--muted);line-height:1.5}
-.toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none;white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none;white-space:nowrap}
 .toast.on{opacity:1;transform:translateX(-50%)}
 .catBudget{display:flex;align-items:center;gap:10px;padding:8px 0}
 .catBudget .ico{width:34px;height:34px;font-size:16px;border-radius:10px}
@@ -125,7 +144,7 @@ label.l{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin
 .authWrap{min-height:100vh;display:none;align-items:center;justify-content:center;padding:24px 18px}
 .authWrap.on{display:flex}
 .authBox{width:100%;max-width:400px}
-.logo{width:64px;height:64px;border-radius:20px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:34px;font-weight:800;margin:0 auto 14px}
+.logo{width:64px;height:64px;border-radius:20px;background:var(--navy);color:var(--brand);display:grid;place-items:center;font-size:34px;font-weight:800;margin:0 auto 14px}
 .authBox h1{text-align:center;margin:0 0 4px;font-size:24px}
 .authBox p.c{text-align:center;color:var(--muted);margin:0 0 20px;font-size:14px}
 .authBox .f{margin-bottom:10px}
@@ -163,6 +182,7 @@ code{background:var(--bg);padding:2px 6px;border-radius:6px;font-size:13px}
       <button type="button" class="link" id="aToggle">Create new account</button>
       <button type="button" class="link" id="aForgot">Forgot password?</button>
     </div>
+    <div class="credit" style="margin-top:28px">Made with <span class="h">♥</span> by <b>Lokesh Vijjapu</b></div>
   </form>
 </div>
 
@@ -177,21 +197,23 @@ code{background:var(--bg);padding:2px 6px;border-radius:6px;font-size:13px}
   <!-- HOME -->
   <section class="view on" id="v-home">
     <div class="card hero">
-      <div class="lbl" id="heroLbl">Spent this month</div>
+      <div class="heroTop"><span id="heroLbl">Total spent</span><span class="emv"></span></div>
       <div class="big" id="monthTotal">₹0</div>
+      <div class="heroSub" id="budgetLeft">Set a monthly budget in Settings</div>
       <div class="bar" id="budgetBar"><i style="width:0%"></i></div>
-      <div class="meta"><span id="budgetLeft">Set a monthly budget in Settings</span><span id="budgetPct"></span></div>
+      <div class="meta"><span class="cardName" id="cardName">Lokesh Vijjapu</span><span class="cardPct" id="budgetPct"></span></div>
     </div>
     <div class="alert" id="alert"></div>
     <div class="stats">
       <div class="stat"><div class="l">Today</div><div class="v" id="sToday">₹0</div></div>
       <div class="stat"><div class="l">This week</div><div class="v" id="sWeek">₹0</div></div>
-      <div class="stat"><div class="l">Daily avg</div><div class="v" id="sAvg">₹0</div></div>
+      <div class="stat"><div class="l" id="sAvgL">Daily avg</div><div class="v" id="sAvg">₹0</div></div>
     </div>
     <div class="card">
       <h2>Recent expenses <a data-go="history">See all</a></h2>
       <div id="recent"><div class="loading">Loading your expenses…</div></div>
     </div>
+    <div class="credit">Made with <span class="h">♥</span> by <b>Lokesh Vijjapu</b></div>
   </section>
 
   <!-- HISTORY -->
@@ -256,17 +278,23 @@ code{background:var(--bg);padding:2px 6px;border-radius:6px;font-size:13px}
     </div>
     <div class="card">
       <h2>Account</h2>
+      <label class="l" style="margin-top:4px">Name on your card</label>
+      <div style="display:flex;gap:8px;margin-bottom:6px">
+        <input class="f" id="nameIn" maxlength="30" placeholder="Lokesh Vijjapu">
+        <button class="btn" style="width:auto;margin:0;padding:0 20px" id="saveName">Save</button>
+      </div>
       <div class="setRow"><div><div id="accEmail">—</div><div class="d">Signed in</div></div><button class="chip" id="signOutBtn">Sign out</button></div>
     </div>
+    <div class="credit">Made with <span class="h">♥</span> by <b>Lokesh Vijjapu</b><br><span style="font-size:11.5px">My Expenses v2</span></div>
   </section>
 </div>
 </div>
 
-<button class="fab" id="fab" aria-label="Add expense">+</button>
 
 <nav class="tabs">
   <button data-go="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
   <button data-go="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>History</button>
+  <button class="addBtn" id="fab" aria-label="Add expense"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
   <button data-go="charts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.3A9 9 0 0 1 20.7 9H15z"/></svg>Charts</button>
   <button data-go="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
 </nav>
@@ -411,7 +439,7 @@ function listen(){
     loaded = true; setSync(); render();
   }, err => { toast('Could not load data: ' + (err.code||'error')); loaded = true; render(); }));
   unsubs.push(onSnapshot(setRef(), snap => {
-    if (snap.exists()) { const d = snap.data(); settings = {budget:Number(d.budget)||0, catBudgets:{...(d.catBudgets||{})}}; render(); }
+    if (snap.exists()) { const d = snap.data(); settings = {budget:Number(d.budget)||0, catBudgets:{...(d.catBudgets||{})}, name: d.name||''}; render(); }
   }, ()=>{}));
 }
 
@@ -469,11 +497,14 @@ function render(){
   const now = new Date(), t = todayStr(), mk = monthKey(now);
   $('#todayLbl').textContent = now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
   const hr = now.getHours();
-  $('#hello').textContent = hr<12?'Good morning 👋':hr<17?'Good afternoon 👋':'Good evening 👋';
+  const fullName = (settings.name || 'Lokesh Vijjapu').trim();
+  $('#hello').textContent = `Hi, ${fullName.split(' ')[0]} 👋`;
+  $('#cardName').textContent = fullName;
+  if (document.activeElement !== $('#nameIn')) $('#nameIn').value = settings.name || '';
 
   const thisMonth = expenses.filter(e=>e.date.startsWith(mk));
   const mTotal = sum(thisMonth);
-  $('#heroLbl').textContent = 'Spent in ' + now.toLocaleDateString('en-IN',{month:'long'});
+  $('#heroLbl').textContent = 'Total spent · ' + now.toLocaleDateString('en-IN',{month:'long'});
   $('#monthTotal').textContent = inr(mTotal);
   const b = Number(settings.budget)||0, bar = $('#budgetBar'), al = $('#alert');
   bar.classList.remove('warn','over'); al.className='alert';
@@ -502,7 +533,9 @@ function render(){
   $('#sToday').textContent = inr(sum(expenses.filter(e=>e.date===t)));
   const wk = new Date(now); wk.setDate(wk.getDate()-((wk.getDay()+6)%7)); const wkS = ymd(wk);
   $('#sWeek').textContent = inr(sum(expenses.filter(e=>e.date>=wkS && e.date<=t)));
-  $('#sAvg').textContent = inr(mTotal / now.getDate());
+  const sAvg = $('#sAvg'); sAvg.classList.remove('good','bad');
+  if (b>0){ $('#sAvgL').textContent = mTotal>b ? 'Over by' : 'Left'; sAvg.textContent = inr(Math.abs(b-mTotal)); sAvg.classList.add(mTotal>b?'bad':'good'); }
+  else { $('#sAvgL').textContent = 'Daily avg'; sAvg.textContent = inr(mTotal / now.getDate()); }
 
   const rec = [...expenses].sort(sortDesc).slice(0,6);
   $('#recent').innerHTML = !loaded ? '<div class="loading">Loading your expenses…</div>' :
@@ -620,7 +653,6 @@ $('#catFilter').addEventListener('change', render);
 function showView(v){
   $$('.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+v));
   $$('nav.tabs button').forEach(b=>b.classList.toggle('on', b.dataset.go===v));
-  $('#fab').style.display = v==='settings' ? 'none' : 'grid';
   window.scrollTo(0,0); render();
 }
 
@@ -634,6 +666,11 @@ $('#saveCatBudgets').addEventListener('click', ()=>{
   const cb = {}; $$('[data-cb]').forEach(i=>{ const v=parseFloat(i.value); if(v>0) cb[i.dataset.cb]=v; });
   document.activeElement && document.activeElement.blur();
   saveSettings({...settings, catBudgets:cb}); toast('Category budgets saved ✓');
+});
+
+$('#saveName').addEventListener('click', ()=>{
+  const n = $('#nameIn').value.trim().slice(0,30); $('#nameIn').blur();
+  saveSettings({...settings, name:n}); toast('Name saved ✓');
 });
 
 // ---------- backup ----------
@@ -657,7 +694,7 @@ $('#restoreFile').addEventListener('change', async ev=>{
       list.slice(i,i+400).forEach(e=>{ const {id,...d}=e; batch.set(doc(expCol(), String(id)), {...d, amount:Number(d.amount)}); });
       batch.commit().catch(err=>toast('Restore failed: '+(err.code||'error')));
     }
-    if (data.settings) saveSettings({budget:Number(data.settings.budget)||0, catBudgets:data.settings.catBudgets||{}});
+    if (data.settings) saveSettings({budget:Number(data.settings.budget)||0, catBudgets:data.settings.catBudgets||{}, name:data.settings.name||settings.name||''});
     toast(`Restored ${list.length} expenses ✓`);
   } catch(e){ toast('That file is not a valid backup'); }
 });
