@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Setup guide – My Expenses app</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:760px;margin:0 auto;padding:24px 18px 60px;line-height:1.6;color:#14201d;background:#f4f6f5}
+h1{font-size:26px;margin-bottom:4px}h2{font-size:19px;margin:0 0 8px}
+.step{background:#fff;border:1px solid #e3e8e6;border-radius:16px;padding:18px 20px;margin:16px 0}
+.n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#0f766e;color:#fff;font-weight:700;margin-right:8px}
+code,kbd{background:#eef2f1;padding:2px 6px;border-radius:6px;font-size:14px}
+pre{background:#14201d;color:#e8efed;padding:14px;border-radius:12px;overflow:auto;font-size:13px}
+.tip{background:#e6f4f2;border-radius:12px;padding:10px 14px;font-size:14.5px}
+.warn{background:#fdf3e2;border-radius:12px;padding:10px 14px;font-size:14.5px}
+li{margin:4px 0}
+</style></head><body>
+<h1>📲 My Expenses: setup guide</h1>
+<p>You only do this once, on your <b>laptop</b>. It takes about 20 minutes. Everything is free and no credit card is needed.</p>
+<p class="tip"><b>What you're setting up:</b><br>
+• <b>Firebase</b> (by Google) is the database where your expenses are safely stored.<br>
+• <b>GitHub Pages</b> gives you a free website link for the app, which you open on your phone and laptop.</p>
+
+<div class="step"><h2><span class="n">1</span>Unzip the files</h2>
+<p>Right-click the <code>expenses-app.zip</code> file → <b>Extract All</b>. You'll get a folder with these files:<br>
+<code>index.html</code> <code>firebase-config.js</code> <code>sw.js</code> <code>manifest.json</code> <code>icon-192.png</code> <code>icon-512.png</code> <code>apple-touch-icon.png</code> <code>firestore-rules.txt</code></p></div>
+
+<div class="step"><h2><span class="n">2</span>Create a Firebase project</h2>
+<ol>
+<li>Go to <a href="https://console.firebase.google.com">console.firebase.google.com</a> and sign in with your Google (Gmail) account.</li>
+<li>Click <b>Create a project</b> (or "Get started").</li>
+<li>Name it <code>my-expenses</code> → Continue.</li>
+<li>When it asks about <b>Google Analytics</b>, turn it <b>off</b> (you don't need it) → <b>Create project</b>.</li>
+</ol></div>
+
+<div class="step"><h2><span class="n">3</span>Connect the app to Firebase</h2>
+<ol>
+<li>On the project home page, click the <b>Web</b> icon <code>&lt;/&gt;</code> ("Add app" → Web).</li>
+<li>App nickname: <code>expenses</code>. <b>Don't</b> tick "Firebase Hosting". Click <b>Register app</b>.</li>
+<li>Firebase shows some code with <code>const firebaseConfig = { apiKey: "...", ... }</code>.</li>
+<li>Open <code>firebase-config.js</code> from your folder with <b>Notepad</b> (right-click → Open with → Notepad).</li>
+<li>Replace each <code>"PASTE_HERE"</code> with the matching value from Firebase. It should end up looking like this (with your own values):
+<pre>export const firebaseConfig = {
+  apiKey: "AIzaSyB....",
+  authDomain: "my-expenses-1234.firebaseapp.com",
+  projectId: "my-expenses-1234",
+  storageBucket: "my-expenses-1234.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:abc123"
+};</pre></li>
+<li>Save the file (<kbd>Ctrl</kbd>+<kbd>S</kbd>).</li>
+</ol>
+<p class="tip">These values are not secret passwords. They just tell the app which database is yours. Your data is protected by your login and the rules in step 5.</p></div>
+
+<div class="step"><h2><span class="n">4</span>Turn on email login</h2>
+<ol>
+<li>In the left menu: <b>Build → Authentication</b> → <b>Get started</b>.</li>
+<li>Go to the <b>Sign-in method</b> tab → click <b>Email/Password</b> → turn on the first switch (<b>Enable</b>) → <b>Save</b>.</li>
+</ol></div>
+
+<div class="step"><h2><span class="n">5</span>Create the database</h2>
+<ol>
+<li>Left menu: <b>Build → Firestore Database</b> → <b>Create database</b>.</li>
+<li>Location: choose <b>asia-south1 (Mumbai)</b>. You can't change this later.</li>
+<li>Choose <b>Start in production mode</b> → <b>Create</b>.</li>
+<li>Open the <b>Rules</b> tab. Delete everything in the box, paste the text from <code>firestore-rules.txt</code>, and click <b>Publish</b>.</li>
+</ol>
+<p class="tip">These rules mean <b>only you</b> (after logging in) can read or change your expenses.</p></div>
+
+<div class="step"><h2><span class="n">6</span>Put the app online with GitHub Pages</h2>
+<ol>
+<li>Go to <a href="https://github.com">github.com</a> and <b>Sign up</b> (free). Remember your <b>username</b>.</li>
+<li>Click <b>+</b> (top right) → <b>New repository</b>. Name: <code>expenses</code>. Keep it <b>Public</b>. Click <b>Create repository</b>.</li>
+<li>On the next page, click the link <b>"uploading an existing file"</b>.</li>
+<li>Drag <b>all the files</b> from your folder into the page (you can skip SETUP-GUIDE.html) → click <b>Commit changes</b>.</li>
+<li>Go to the repository's <b>Settings</b> → <b>Pages</b> (left menu).</li>
+<li>Under "Build and deployment", Source: <b>Deploy from a branch</b>, Branch: <b>main</b>, folder <b>/ (root)</b> → <b>Save</b>.</li>
+<li>Wait 1–2 minutes and refresh. Your app link appears at the top:<br><code>https://YOUR-USERNAME.github.io/expenses/</code></li>
+</ol></div>
+
+<div class="step"><h2><span class="n">7</span>Allow your link in Firebase</h2>
+<ol>
+<li>Back in Firebase: <b>Authentication → Settings → Authorized domains</b> → <b>Add domain</b>.</li>
+<li>Type <code>YOUR-USERNAME.github.io</code> (without https:// and without /expenses) → <b>Add</b>.</li>
+</ol></div>
+
+<div class="step"><h2><span class="n">8</span>Start using it 🎉</h2>
+<ol>
+<li>Open your link on the laptop → tap <b>Create new account</b> → enter your email and a password.</li>
+<li>On your <b>phone</b>, open the same link in <b>Chrome</b> → <b>Sign in</b> with the same email and password.</li>
+<li>To install it like an app: Chrome menu <b>⋮</b> → <b>Add to Home screen</b> / <b>Install app</b>. (iPhone: Safari → Share → Add to Home Screen.)</li>
+</ol>
+<p class="tip"><b>Optional but recommended:</b> after you've created your account, stop strangers from making accounts: Firebase → Authentication → Settings → <b>User actions</b> → untick <b>Enable create (sign-up)</b> → Save.</p></div>
+
+<div class="step"><h2>🔒 Keeping your data safe</h2>
+<ul>
+<li>Your data is stored in Google's Firebase servers, so it's not lost if your phone breaks or you clear the browser.</li>
+<li>The app also keeps a copy on your phone, so you can add expenses <b>without internet</b>. They sync automatically when you're back online.</li>
+<li>For extra safety, once a month go to <b>Settings → Download backup</b> and keep that file (e.g. in Google Drive).</li>
+<li>Don't forget your password. If you do, use "Forgot password?" on the login screen.</li>
+</ul>
+<p class="warn">The free Firebase plan allows 50,000 reads and 20,000 saves per day. Personal use is far below that, so you'll never pay anything.</p></div>
+
+<div class="step"><h2>✏️ Changing the app later</h2>
+<p>If you get an updated <code>index.html</code>, open your GitHub repository → <b>Add file → Upload files</b> → drop the new file → <b>Commit changes</b>. The app updates within a couple of minutes, and your data stays exactly as it is.</p></div>
+</body></html>
